@@ -1,0 +1,1494 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nayra e Ítalo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+      @font-face {
+        font-family: "NayraItalo";
+        src: url("./fonts/montigny-regular.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      :root {
+        --glass-bg: rgba(255, 255, 255, 0.22);
+        --glass-border: rgba(255, 255, 255, 0.4);
+        --text-color: #536c94;
+        --accent-color: #000000;
+        --accent-dark: #536c94;
+        --white-pure: #fffaf7;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Le Major", "Montserrat", sans-serif;
+        min-height: 100vh;
+        background: #eef8ff;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        color: var(--text-color);
+      }
+
+      .container {
+        width: 100%;
+        max-width: 900px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 40px;
+        padding: 40px 30px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+      }
+
+      /* Menu de Navegação Superior */
+      .nav-menu {
+        position: sticky;
+        top: 10px;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        padding: 10px;
+        border-radius: 25px;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        margin-bottom: 40px;
+        z-index: 100;
+        flex-wrap: wrap;
+      }
+
+      .nav-link {
+        text-decoration: none;
+        color: var(--text-color);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 6px 8px;
+        transition: 0.3s;
+        border-bottom: 2px solid transparent;
+      }
+
+      .nav-link:hover {
+        color: var(--accent-color);
+        border-bottom-color: #536c94;
+      }
+
+      @media (min-width: 600px) {
+        .nav-menu {
+          gap: 15px;
+          padding: 15px 10px;
+        }
+        .nav-link {
+          font-size: 0.85rem;
+          letter-spacing: 1px;
+          padding: 5px 10px;
+        }
+      }
+
+      /* Cabeçalho */
+      h1 {
+        font-family: "Alex Brush", cursive;
+        font-size: 3.8rem;
+        margin-bottom: 10px;
+        color: #000000;
+      }
+
+      .wedding-date {
+        font-size: 1.2rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 300;
+        margin-bottom: 30px;
+        color: var(--text-color);
+      }
+
+      /* Contagem Regressiva */
+      .countdown-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 30px auto;
+        max-width: 500px;
+      }
+
+      .countdown-box {
+        background: rgba(255, 255, 255, 0.3);
+        border: 1px solid var(--glass-border);
+        border-radius: 15px;
+        padding: 15px;
+        min-width: 75px;
+        flex: 1;
+      }
+
+      .countdown-number {
+        font-size: 1.8rem;
+        font-weight: 600;
+        font-family: "Le Major", "Playfair Display", serif;
+        color: #536c94;
+      }
+
+      .countdown-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 0.8;
+        color: var(--text-color);
+      }
+
+      /* Seções Gerais */
+      .section-block {
+        padding: 50px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        scroll-margin-top: 50px;
+      }
+
+      #home,
+      #historia,
+      #cerimonia,
+      #recepcao,
+      #presentes {
+        scroll-margin-top: 50px;
+      }
+
+      .section-block:last-of-type {
+        border-bottom: none;
+      }
+
+      h2 {
+        font-family: "NayraItalo", sans-serif;
+        font-size: 5rem;
+        font-weight: 550;
+        margin-bottom: 25px;
+        color: var(--accent-color);
+      }
+
+      .intro-box {
+        text-align: center;
+        line-height: 1.8;
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      /* Estrutura de Fotos + Texto */
+      .content-flex {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      @media (min-width: 768px) {
+        .content-flex {
+          flex-direction: row;
+          text-align: left;
+        }
+        .content-flex.reverse {
+          flex-direction: row-reverse;
+        }
+        .content-flex .text-side {
+          flex: 1;
+        }
+        .content-flex .image-side {
+          flex: 1;
+        }
+      }
+
+      .image-side img {
+        width: 100%;
+        max-width: 380px;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 20px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      }
+
+      .text-side p {
+        line-height: 1.7;
+        margin-bottom: 15px;
+      }
+
+      /* Botões de Localização */
+      .nav-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 25px;
+        flex-wrap: wrap;
+      }
+
+      .btn-nav {
+        background: #536c94;
+        color: var(--white-pure);
+        padding: 12px 25px;
+        border-radius: 15px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-nav:hover {
+        background: var(--accent-dark);
+        transform: translateY(-2px);
+      }
+
+      .btn-maps {
+        background-color: #4285f4;
+      }
+      .btn-waze {
+        background-color: #33ccff;
+      }
+
+      /* Lista de Presentes */
+      .gift-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .gift-card {
+        background: rgba(255, 255, 255, 0.25);
+        border: 1px solid var(--glass-border);
+        border-radius: 25px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 220px;
+        transition: 0.4s;
+        position: relative;
+      }
+
+      .gift-image {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .gift-content {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        text-align: left;
+        justify-content: space-between;
+      }
+
+      .gift-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        line-height: 1.3;
+        margin-bottom: 5px;
+        color: var(--text-color);
+      }
+      .gift-desc {
+        font-size: 0.75rem;
+        opacity: 0.7;
+        margin-bottom: 10px;
+      }
+
+      .gift-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+      }
+
+      .gift-price {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--accent-color);
+      }
+      .gift-buttons {
+        display: flex;
+        gap: 5px;
+      }
+
+      .btn-gift {
+        background: #536c94;
+        color: var(--white-pure);
+        padding: 8px 12px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.8rem;
+        transition: 0.3s;
+      }
+
+      .btn-gift:hover {
+        background: var(--accent-dark);
+        transform: translateY(-2px);
+      }
+
+      /* Modais */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+
+        justify-content: center;
+        align-items: center;
+
+        /* Permite rolar o modal em telas pequenas */
+        overflow-y: auto;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .modal-content {
+        background: var(--white-pure);
+        padding: 30px;
+        border-radius: 30px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        color: #2c3e50;
+
+        /* Impede que o conteúdo ultrapasse a tela */
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+
+        /* Garante que padding não aumente a largura */
+        box-sizing: border-box;
+
+        /* Evita que o modal seja espremido */
+        flex-shrink: 0;
+      }
+
+      @media (max-width: 600px) {
+        .modal {
+          padding: 10px;
+          align-items: flex-start;
+        }
+
+        .modal-content {
+          width: 95%;
+          margin: 10px auto;
+          padding: 20px;
+          max-height: calc(100vh - 20px);
+          border-radius: 20px;
+        }
+      }
+
+      /* Monograma de rodapé flutuante */
+      .monograma-container {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .monograma-container img {
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+        opacity: 1;
+      }
+      /* Topo */
+      .historia-top {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+      }
+
+      .historia-top img {
+        width: 45%;
+        max-width: 450px;
+        border-radius: 15px;
+        object-fit: cover;
+      }
+
+      /* Texto */
+      .historia-texto {
+        max-width: 900px;
+        margin: 0 auto 50px;
+        text-align: center;
+        line-height: 1.9;
+        font-size: 1.1rem;
+      }
+
+      /* Galeria */
+      .historia-galeria {
+        display: flex;
+        gap: 15px;
+        overflow-x: auto;
+        padding: 10px 0;
+        scroll-behavior: smooth;
+      }
+
+      .historia-galeria::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .historia-galeria::-webkit-scrollbar-thumb {
+        background: #536c94;
+        border-radius: 10px;
+      }
+
+      .historia-galeria img {
+        width: 250px;
+        height: 380px;
+        object-fit: cover;
+        border-radius: 12px;
+        flex-shrink: 0;
+        transition: transform 0.3s;
+        cursor: pointer;
+      }
+
+      .historia-galeria img:hover {
+        transform: scale(1.05);
+      }
+
+      /* Responsivo */
+      @media (max-width: 768px) {
+        .historia-top {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .historia-top img {
+          width: 90%;
+        }
+
+        .historia-texto {
+          padding: 0 20px;
+          text-align: justify;
+        }
+
+        .historia-galeria img {
+          width: 180px;
+          height: 250px;
+        }
+      }
+
+      .cerimonia-imagem {
+        text-align: center;
+        margin-bottom: 35px;
+      }
+
+      .cerimonia-imagem img {
+        width: 100%;
+        max-width: 900px;
+        max-height: 550px;
+        object-fit: cover;
+        border-radius: 18px;
+        display: block;
+        margin: 0 auto;
+      }
+
+      .legenda-imagem {
+        margin-top: 12px;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--text-color);
+        opacity: 0.8;
+      }
+
+      .cerimonia-texto {
+        max-width: 850px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .cerimonia-texto p {
+        margin-bottom: 18px;
+        line-height: 1.8;
+      }
+
+      .rsvp-container {
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .rsvp-input {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        font-size: 16px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+
+      .rsvp-btn {
+        background: #536c94;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      .rsvp-btn:hover {
+        background: var(--accent-dark);
+      }
+
+      .rsvp-results {
+        margin-top: 20px;
+      }
+
+      .guest-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 10px;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      #telefoneLabel {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+
+      #telefoneFinal {
+        width: 180px;
+      }
+
+      .status-msg {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+
+      .convite-card {
+        display: flex;
+
+        align-items: center;
+
+        gap: 15px;
+
+        padding: 18px;
+
+        margin: 12px 0;
+
+        border-radius: 15px;
+
+        background: rgba(255, 255, 255, 0.18);
+
+        cursor: pointer;
+
+        transition: 0.3s;
+      }
+
+      .convite-card:hover {
+        transform: translateY(-3px);
+
+        background: rgba(255, 255, 255, 0.28);
+      }
+
+      .convite-icon {
+        font-size: 34px;
+      }
+
+      .convite-info {
+        flex: 1;
+      }
+
+      .convite-nome {
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .convite-desc {
+        opacity: 0.8;
+
+        font-size: 14px;
+      }
+
+      .guest-card {
+        margin: 18px 0;
+
+        padding: 18px;
+
+        border-radius: 14px;
+
+        background: rgba(255, 255, 255, 0.18);
+      }
+
+      .guest-name {
+        font-weight: bold;
+
+        margin-bottom: 12px;
+      }
+
+      .guest-buttons {
+        display: flex;
+
+        gap: 10px;
+      }
+
+      .guest-btn {
+        flex: 1;
+
+        padding: 12px;
+
+        border: none;
+
+        border-radius: 10px;
+
+        cursor: pointer;
+
+        font-size: 15px;
+
+        transition: 0.25s;
+      }
+
+      .guest-btn:hover {
+        transform: scale(1.03);
+      }
+
+      .selected-green {
+        background: #28a745 !important;
+
+        color: white;
+      }
+
+      .selected-red {
+        background: #dc3545 !important;
+
+        color: white;
+      }
+
+      .loading {
+        opacity: 0.8;
+        font-style: italic;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.2rem;
+        }
+        .countdown-container {
+          width: 100%;
+          gap: 8px;
+        }
+        .countdown-box {
+          padding: 10px;
+          min-width: 60px;
+        }
+        .countdown-number {
+          font-size: 1.4rem;
+        }
+        .container {
+          padding: 25px 15px;
+        }
+      }
+    </style>
+  </head>
+  <body id="topo">
+    <div class="container">
+      <!-- MENU DE NAVEGAÇÃO SUPERIOR -->
+      <nav class="nav-menu">
+        <a href="#topo" class="nav-link">Home</a>
+        <a href="#historia" class="nav-link">Casal</a>
+        <a href="#cerimonia" class="nav-link">Cerimônia</a>
+        <a href="#recepcao" class="nav-link">Recepção</a>
+        <a href="#confirmacao" class="nav-link">Confirmação</a>
+        <a href="#presentes" class="nav-link">Presentes</a>
+      </nav>
+
+      <!-- SEÇÃO HOME / CABEÇALHO -->
+      <section id="home" class="cerimonia-imagem">
+        <img
+          src="https://i.ibb.co/fVBD8xqg/NOMES-removebg-preview.png"
+          alt="Foto 2"
+        />
+
+        <!-- Contagem Regressiva -->
+        <div class="countdown-container">
+          <div class="countdown-box">
+            <div class="countdown-number" id="days">00</div>
+            <div class="countdown-label">Dias</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-number" id="hours">00</div>
+            <div class="countdown-label">Horas</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-number" id="minutes">00</div>
+            <div class="countdown-label">Min</div>
+          </div>
+          <div class="countdown-box">
+            <div class="countdown-number" id="seconds">00</div>
+            <div class="countdown-label">Seg</div>
+          </div>
+        </div>
+
+        <!-- Parte com texto de boas-vindas -->
+        <div class="intro-box">
+          <p>
+            Com muito amor, convidamos você para celebrar o início da nossa nova
+            jornada. Será uma alegria imensa contar com a sua presença nessa
+            celebração tão especial!
+          </p>
+        </div>
+      </section>
+
+      <!-- SEÇÃO NOSSA HISTÓRIA -->
+      <section id="historia" class="section-block">
+        <h2>Nossa História</h2>
+
+        <!-- Duas imagens principais -->
+        <div class="historia-top">
+          <img src="https://i.ibb.co/zTk8Dmx6/CASAL1.jpg" alt="Foto 1" />
+          <img src="https://i.ibb.co/MYnkgb3/CASAL4.jpg" alt="Foto 2" />
+        </div>
+
+        <!-- Texto -->
+        <div class="historia-texto">
+          <p>
+            Nossa história começou de forma simples, mas foi crescendo a cada
+            dia, guiada pelo carinho, pela paciência e, acima de tudo, por Deus.
+          </p>
+
+          <p>
+            Vivemos a saudade, superamos a distância e descobrimos que o amor se
+            fortalece quando é construído com confiança, diálogo e parceria.
+            Hoje, compartilhamos os mesmos sonhos, amamos viver novas
+            experiências juntos e temos a certeza de que Deus sempre esteve à
+            frente de cada capítulo da nossa caminhada.
+          </p>
+
+          <p>
+            E, no fim das contas, percebi que não sou apenas apaixonada pelo
+            Ítalo. Sou apaixonada por nós, pela história que construímos e pela
+            certeza de que o nosso amor sempre esteve nas mãos de Deus.
+          </p>
+        </div>
+
+        <!-- Galeria -->
+        <div class="historia-galeria">
+          <img src="https://i.ibb.co/xtbkC9mc/CASAL2.jpg" alt="" />
+          <img src="https://i.ibb.co/gFd2JkPN/CASAL3.jpg" alt="" />
+          <img src="https://i.ibb.co/PsRh1WnJ/CASAL5.jpg" alt="" />
+          <img src="https://i.ibb.co/5W0NNKBP/CASAL6.jpg" alt="" />
+          <img src="https://i.ibb.co/Q7Vsyxhx/CASAL7.jpg" alt="" />
+          <img src="https://i.ibb.co/BHz2HW3D/CASAL8.jpg" alt="" />
+          <img src="https://i.ibb.co/DPML7h1T/CASAL9.jpg" alt="" />
+        </div>
+      </section>
+
+      <!-- SEÇÃO CERIMÔNIA -->
+      <section id="cerimonia" class="section-block">
+        <h2>A Cerimônia</h2>
+
+        <!-- Imagem da igreja -->
+        <div class="cerimonia-imagem">
+          <img
+            src="https://i.ibb.co/FL6zRjyZ/IGREJA.jpg"
+            alt="Igreja Matriz de São João Eudes"
+          />
+
+          <p class="legenda-imagem">
+            Catedral Diocesana Nossa Senhora da Palma
+          </p>
+        </div>
+
+        <!-- Texto -->
+        <div class="cerimonia-texto">
+          <p>
+            <strong>Horário:</strong> Sábado, 23 de Janeiro de 2027 às 15:30h
+          </p>
+
+          <p>
+            Com a graça de Deus, celebraremos o nosso matrimônio na Catedral
+            Diocesana Nossa Senhora da Palma.
+          </p>
+
+          <p><strong>Endereço:</strong> Av. Sete de Setembro, Baturité - CE</p>
+
+          <div class="nav-buttons">
+            <a
+              href="https://maps.app.goo.gl/JCvXNLEPip73UpcN8"
+              target="_blank"
+              class="btn-nav btn-maps"
+              >Maps</a
+            >
+            <a
+              href="https://waze.com/ul/h7phr7hjcr"
+              target="_blank"
+              class="btn-nav btn-waze"
+              >Waze</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO RECEPÇÃO -->
+      <section id="recepcao" class="section-block">
+        <h2>A Recepção</h2>
+        <div class="cerimonia-imagem">
+          <img
+            src="https://i.ibb.co/NgBYw7Jx/LOCAL.jpg"
+            alt="Festa de Recepção"
+          />
+        </div>
+        <div class="cerimonia-texto">
+          <p>
+            Após a cerimônia, teremos a alegria de receber nossos convidados
+            para celebrar este momento tão especial na Fazenda Pinheiro.
+          </p>
+          <p>
+            <strong>Local:</strong> Fazenda Pinheiro, Candeia Riachão -
+            Baturité/CE
+          </p>
+
+          <div class="nav-buttons">
+            <a
+              href="https://maps.app.goo.gl/ebZkb5NQCnzqucbe9"
+              target="_blank"
+              class="btn-nav btn-maps"
+              >Maps</a
+            >
+            <a
+              href="https://waze.com/ul/h7phrsm7rd"
+              target="_blank"
+              class="btn-nav btn-waze"
+              >Waze</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section id="confirmacao" class="section-block">
+        <h2>Confirmação de Presença</h2>
+
+        <p style="max-width: 600px; margin: 0 auto 20px; line-height: 1.6">
+          Sua confirmação é muito importante para nós!
+        </p>
+
+        <div class="nav-buttons">
+          <a
+            href="https://wa.link/gc6fdy"
+            target="_blank"
+            class="btn-nav btn-wpp"
+          >
+            Whatsapp
+          </a>
+        </div>
+      </section>
+
+      <!-- SEÇÃO LISTA DE PRESENTES -->
+      <section id="presentes" class="section-block">
+        <h2>Lista de Presentes</h2>
+        <p style="max-width: 600px; margin: 0 auto 20px; line-height: 1.6">
+          Caso deseje nos presentear, escolhemos cotas de presentes simbólicos e
+          divertidos que nos ajudarão em nossa lua de mel e no início de nossa
+          vida juntos.
+        </p>
+
+        <div class="gift-grid" id="giftGrid">
+          <!-- Os cards de presentes serão gerados dinamicamente aqui -->
+        </div>
+      </section>
+
+      <!-- Monograma de Rodapé -->
+      <div class="monograma-container">
+        <img
+          src="https://i.ibb.co/Kj1PJnNT/MONOGRAMA-removebg-preview.png"
+          alt="Monograma"
+        />
+      </div>
+    </div>
+
+    <!-- MODAIS DE PAGAMENTO (PIX E CARTÃO) -->
+    <div id="pixModal" class="modal">
+      <div class="modal-content">
+        <h3 id="modalGiftName"></h3>
+        <div
+          id="qrcode"
+          style="display: flex; justify-content: center; margin: 15px 0"
+        ></div>
+        <p
+          id="pixCode"
+          style="
+            font-size: 0.6rem;
+            word-break: break-all;
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 10px;
+          "
+        ></p>
+        <button
+          class="btn-gift"
+          style="width: 100%; margin-top: 15px"
+          onclick="copyPix()"
+        >
+          Copiar Código
+        </button>
+
+        <p
+          onclick="closeModal('pixModal')"
+          style="cursor: pointer; margin-top: 15px; text-decoration: underline"
+        >
+          Fechar
+        </p>
+      </div>
+    </div>
+
+    <div id="cartaoModal" class="modal">
+      <div class="modal-content">
+        <h3 id="cartaoGiftName" style="margin-bottom: 10px"></h3>
+        <p style="font-size: 0.9rem; margin-bottom: 20px">
+          Você será redirecionado para o pagamento seguro.
+        </p>
+
+        <a
+          id="btnLinkCartao"
+          href="#"
+          target="_blank"
+          class="btn-gift"
+          style="
+            width: 100%;
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-decoration: none;
+          "
+          >Ir para Pagamento</a
+        >
+
+        <p style="font-size: 0.7rem; color: #999; margin-bottom: 5px">
+          Ou copie o link:
+        </p>
+        <p
+          id="txtLinkCartao"
+          style="
+            font-size: 0.6rem;
+            word-break: break-all;
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 10px;
+            color: #666;
+          "
+        ></p>
+
+        <p
+          onclick="closeModal('cartaoModal')"
+          style="
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: underline;
+            font-size: 0.8rem;
+          "
+        >
+          Voltar
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // Configurações do PIX
+      const MINHA_CHAVE_PIX = "+5585982172141";
+      const NOME_BENEFICIARIO = "ANTONIO ITALO PINHEIRO GOMES";
+      const CIDADE_BENEFICIARIO = "Baturite";
+
+      // Banco de dados dos presentes
+      let gifts = [
+        {
+          nome: "Jogo de copos de vidro",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQviI3uUhME1IB4clOJ-90G3wJyJDCM1TAZAYyBeutJhA&s=10",
+          link_cartao: "200.0",
+        },
+        {
+          nome: "Liquidificador",
+          descricao: "",
+          preco: "259.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn2f2VQIhMjXFz-x03tdpx5pX5fUCdKLWHZgAX2wGSNQ&s",
+          link_cartao: "",
+        },
+        {
+          nome: "Jogo americano",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWvv3akIlViJfjlYLuUmDJlyvFi77zItI0JE7hCcT-2Q&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Jogo de toalhas de banho",
+          descricao: "",
+          preco: "220.00",
+          imagem:
+            "https://feiraodetoalhas.cdn.magazord.com.br/img/2025/03/produto/8585/toalha-banho-banhao-gigante-rosto-felpuda-karsten-lumina-2025.jpg?ims=fit-in/800x",
+          link_cartao: "",
+        },
+        {
+          nome: "Jogo de pratos de cerâmica",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://lavillecasa.vteximg.com.br/arquivos/ids/207617-1800-1800/501843.jpg?v=638564218769400000",
+          link_cartao: "",
+        },
+        {
+          nome: "Jogo de xícaras",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN2CxSwBx9GdXwL6XQkOmDrebycEKxTWKdSYeDWA9QvQ&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Conjunto de panelas",
+          descricao: "",
+          preco: "470.00",
+          imagem:
+            "data:image/webp;base64,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",
+          link_cartao: "",
+        },
+        {
+          nome: "Sanduicheira grill",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuZJq88hK0EzogRGCwCgHxoQyr9hr_yT4xT5Lu2jqgoA&s",
+          link_cartao: "",
+        },
+        {
+          nome: "Espremedor de frutas de 500 ml",
+          descricao: "",
+          preco: "240.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRRKdWmH8Hjwag3yNehu4pnAX3sqmNZOmvWE2Z1Nh2aPsgKBxWMsNbQClY9yNXdJTt0-Sgzw1YrRAyfKa-92YBgZqpEqvEdLTZzrAgq95s",
+          link_cartao: "",
+        },
+        {
+          nome: "Kit com duas mesas de cabeceira",
+          descricao: "",
+          preco: "218.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBI5wl3reG6L8xSY_Y9q198AGlt3LBJcZ-DobHPEJHqA&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Panela de pressão Brinox",
+          descricao: "",
+          preco: "269.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-B9YPFEhXMVPJmIXUbYBJ3F8SnLEzxFH5V8JcQXAGNw&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Ventilador",
+          descricao: "",
+          preco: "210.00",
+          imagem:
+            "https://lebiscuit.vteximg.com.br/arquivos/ids/84211685/5132991_00000_01.jpg?v=639192157497070000",
+          link_cartao: "",
+        },
+        {
+          nome: "Jogos de lençóis",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://images.yampi.me/assets/stores/donadacasaenxoval/uploads/images/jogo-de-lencol-percal-200-fios-100-algodao-casal-3-pecas-com-elastico-tlj-liso-verde-menta-marina-66db53b4316d1-large.jpg",
+          link_cartao: "",
+        },
+        {
+          nome: "Jogo de potes herméticos",
+          descricao: "",
+          preco: "209.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeEeR0Vet7NcwVM__AUtYEUVClrUYo8NZ_-neqy4slwQ&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Ferro de passar roupa",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQlfFLM-9fL2wPffp8CSRlCE4kGEMkYqU4XjItNxr4GWKZ67QIfGMRsvFCw2zBBHn3tenpZeLaBP7DfWkhRYCMfIzkjJnwK7j06i9ifWbT5zJQUVazRrQUHOqZxYKZ95lUfcz9OtZo&usqp=Cac",
+          link_cartao: "",
+        },
+        {
+          nome: "Contribuição para a compra do fogão",
+          descricao: "",
+          preco: "300.00",
+          imagem:
+            "https://friopecas.vtexassets.com/arquivos/ids/243086/FOGAO-5-BOCAS-ELECTROLUX-PRATA-AUTOMATICO-COM-MESA-DE-VIDRO-E-TRIPLA-CHAMA--76GS-.jpg?width=350&height=350&quality=80&format=auto",
+          link_cartao: "",
+        },
+        {
+          nome: "Colcha de cama",
+          descricao: "",
+          preco: "220.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7MGYLt4ziNsthfsqjEd1baTcgHP3fm_0fR-LCeG0xBQ&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Cadeiras para a cozinha",
+          descricao: "",
+          preco: "490.00",
+          imagem:
+            "https://images.tcdn.com.br/img/img_prod/664403/kit_2_cadeiras_estofadas_para_sala_de_jantar_bella_henn_linho_1857_1_5bb402adcbdeebb9fb7565300f7f0678_20250714140407.jpg",
+          link_cartao: "",
+        },
+        {
+          nome: "Mesa para a cozinha",
+          descricao: "",
+          preco: "400.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ74K-XL7-beEsJTukh_Wnj6QUp40iU54F7JlwhIQIcw&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Colcha de cama",
+          descricao: "",
+          preco: "250.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwpo9q1nMr6j7tAjWBHt9JpYv4w3Mnn5YKq1fYfugWgg&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Edredons",
+          descricao: "",
+          preco: "230.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAg6tTlkHfd35iaw3jlLUUC7ioisH1lurSGJhJx-KoYA&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Travesseiro de casal",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSimO5rh6H0kyCwQFwJxshmGYPc4P14jEZ92Dyd4hIZVA&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Faqueiro Tramontina",
+          descricao: "",
+          preco: "300.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLkjb3BWbfNVbcX0CtMMQFzVwI4S3vtWhXDNwgHNz0LQ&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Pix de R$ 200",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://www.feebpr.org.br/images/media/207885066667a4899b351a0.jpg",
+          link_cartao: "",
+        },
+        {
+          nome: "Buffet para a sala",
+          descricao: "",
+          preco: "600.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb3G0iDBnpFzoplSMDwOpHS2BbHUqcHGdmLp_s59xqXA&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Cafeteira expresso",
+          descricao: "",
+          preco: "450.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcToV_nY49sJ_KrEbhltqJM_tVcKMvt6BYH0AAUF198RXut-878kQZvGKxUAyESs1aSwi7lqbqpWaFas0bmUEFHCtGVHlB5XkJ-A-oA-dLXwEPqVMrMy4eWsZ20utqtnqGLlp4lltg&usqp=Cac",
+          link_cartao: "",
+        },
+        {
+          nome: "Gelágua",
+          descricao: "",
+          preco: "600.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdfMZTuTiI4VjB8w5qVY5ltHLRJjoCX_FcGlpfnYZ73g&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Micro-ondas",
+          descricao: "",
+          preco: "568.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqBhRTQ8cJc6f-xBFBGdrQHl7qO9_datt0Cv_wjOwMng&s",
+          link_cartao: "",
+        },
+        {
+          nome: "Pix de R$ 300",
+          descricao: "",
+          preco: "300.00",
+          imagem:
+            "https://www.feebpr.org.br/images/media/207885066667a4899b351a0.jpg",
+          link_cartao: "",
+        },
+        {
+          nome: "Jogo de assadeiras Tramontina",
+          descricao: "",
+          preco: "210.00",
+          imagem:
+            "https://m.media-amazon.com/images/I/617f8-CeXlL._AC_UF894,1000_QL80_.jpg",
+          link_cartao: "",
+        },
+        {
+          nome: "Kit cobre-leito para cama",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbh7soxpirTrsaHJYVCUNK1FFRucgq3VCYZjiYCt9KLA&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Conjunto de travessas",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJMRbzriM1-eauLvWmJ_OtxsIC4tM8EW0VWXRGNhX4GA&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Armário para o banheiro",
+          descricao: "",
+          preco: "250.00",
+          imagem:
+            "https://http2.mlstatic.com/D_NQ_NP_2X_802444-MLB74750692581_022024-F-armario-p-banheiro-com-espelheira-1-porta-selene-flexycolor.webp",
+          link_cartao: "",
+        },
+        {
+          nome: "Cortinas para a sala",
+          descricao: "",
+          preco: "230.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwGpbtk1uD2jRbgfXA3A_ifcNJ-1VgSxmqxCF0Yh86ow&s=10",
+          link_cartao: "",
+        },
+        {
+          nome: "Contribuição para o armário de cozinha do casal",
+          descricao: "",
+          preco: "450.00",
+          imagem:
+            "https://storage.panoverse-cdn.com.br/donatela.img/produto/1047/armario-de-cozinha-kit-compacto-castanha-1900mm-8-portas-2-gavetas-cinza-freijo-telasul-12886-1000x1000-contain.jpg",
+          link_cartao: "",
+        },
+        {
+          nome: "Cortina para o quarto",
+          descricao: "",
+          preco: "250.00",
+          imagem:
+            "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSGdjXP--YytXCoBEAgqUu9XD9wCiInxSItAB47qew-MrZLRGPMyRdnsaGnEOyin3f9131aYH1WALHXlRqQ-9OwM6T0r3LU",
+          link_cartao: "",
+        },
+        {
+          nome: "Potes herméticos Electrolux",
+          descricao: "",
+          preco: "200.00",
+          imagem:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKpydtE9B-eBLveaqVckWsi8UZumExTGaUuJdMZJngTQ&s",
+          link_cartao: "",
+        },
+      ];
+
+      // Embaralha e Renderiza os Presentes
+      function renderGifts() {
+        const grid = document.getElementById("giftGrid");
+        grid.innerHTML = "";
+
+        gifts.forEach((g, i) => {
+          const card = document.createElement("div");
+          card.className = "gift-card";
+          card.innerHTML = `
+                <img src="${g.imagem}" class="gift-image" alt="${g.nome}">
+                <div class="gift-content">
+                    <div>
+                        <p class="gift-name">${g.nome}</p>
+                        <p class="gift-desc">${g.descricao}</p>
+                    </div>
+                    <div class="gift-footer">
+                        <span class="gift-price">R$ ${parseFloat(g.preco).toFixed(2)}</span>
+                        <div class="gift-buttons">
+                            <button class="btn-gift" onclick="generatePixModal(${i})">Pix</button>
+                            <button class="btn-gift" onclick="generateCartaoModal(${i})">Cartão</button>
+                        </div>
+                    </div>
+                </div>`;
+          grid.appendChild(card);
+        });
+      }
+
+      // Modal Controle
+      function closeModal(id) {
+        document.getElementById(id).style.display = "none";
+      }
+
+      // Gerador de Pix
+      function generatePixModal(i) {
+        const g = gifts[i];
+        presenteAtual = g;
+        document.getElementById("modalGiftName").innerText = g.nome;
+        const payload = generatePixPayload(
+          MINHA_CHAVE_PIX,
+          NOME_BENEFICIARIO,
+          CIDADE_BENEFICIARIO,
+          parseFloat(g.preco),
+          g.nome,
+        );
+        document.getElementById("qrcode").innerHTML = "";
+        new QRCode(document.getElementById("qrcode"), {
+          text: payload,
+          width: 150,
+          height: 150,
+        });
+        document.getElementById("pixCode").innerText = payload;
+        document.getElementById("pixModal").style.display = "flex";
+      }
+
+      // Gerador de Cartão
+      function generateCartaoModal(i) {
+        const g = gifts[i];
+        presenteAtual = g;
+        const link = g.link_cartao;
+        document.getElementById("cartaoGiftName").innerText =
+          g.nome + " - R$ " + parseFloat(g.preco).toFixed(2);
+        document.getElementById("btnLinkCartao").href = link;
+        document.getElementById("txtLinkCartao").innerText = link;
+        document.getElementById("cartaoModal").style.display = "flex";
+      }
+
+      function copyPix() {
+        navigator.clipboard.writeText(
+          document.getElementById("pixCode").innerText,
+        );
+        alert("Pix copiado com sucesso!");
+      }
+
+      // Algoritmo do PIX Copia e Cola estático
+      function generatePixPayload(key, name, city, amount, desc) {
+        const strTrim = (s) =>
+          s
+            .substring(0, 25)
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toUpperCase();
+        const format = (id, val) =>
+          id + String(val.length).padStart(2, "0") + val;
+        const info = format("00", "br.gov.bcb.pix") + format("01", key);
+        let p =
+          format("00", "01") +
+          format("26", info) +
+          format("52", "0000") +
+          format("53", "986") +
+          format("54", amount.toFixed(2)) +
+          format("58", "BR") +
+          format("59", strTrim(name)) +
+          format("60", strTrim(city)) +
+          format("62", format("05", strTrim(desc).replace(/\s/g, ""))) +
+          "6304";
+        const crc = (d) => {
+          let r = 0xffff;
+          for (let i = 0; i < d.length; i++) {
+            r ^= d.charCodeAt(i) << 8;
+            for (let j = 0; j < 8; j++)
+              r = r & 0x8000 ? (r << 1) ^ 0x1021 : r << 1;
+          }
+          return (r & 0xffff).toString(16).toUpperCase().padStart(4, "0");
+        };
+        return p + crc(p);
+      }
+
+      function generateCartaoModal(i) {
+        const g = gifts[i];
+        const link = g.link_cartao;
+        document.getElementById("cartaoGiftName").innerText =
+          g.name + " - R$ " + parseFloat(g.price).toFixed(2);
+        document.getElementById("btnLinkCartao").href = link;
+        document.getElementById("txtLinkCartao").innerText = link;
+        document.getElementById("cartaoModal").style.display = "flex";
+      }
+
+      // CONTRA-REGRESSIVA INTELIGENTE
+      function countdown() {
+        const weddingDate = new Date("2027-01-23T15:30:00").getTime();
+
+        const daysEl = document.getElementById("days");
+        const hoursEl = document.getElementById("hours");
+        const minutesEl = document.getElementById("minutes");
+        const secondsEl = document.getElementById("seconds");
+
+        function updateCountdown() {
+          const distance = weddingDate - Date.now();
+
+          if (distance <= 0) {
+            clearInterval(timer);
+
+            daysEl.textContent = "00";
+            hoursEl.textContent = "00";
+            minutesEl.textContent = "00";
+            secondsEl.textContent = "00";
+
+            return;
+          }
+
+          const totalSeconds = Math.floor(distance / 1000);
+
+          const days = Math.floor(totalSeconds / 86400);
+          const hours = Math.floor((totalSeconds % 86400) / 3600);
+          const minutes = Math.floor((totalSeconds % 3600) / 60);
+          const seconds = totalSeconds % 60;
+
+          daysEl.textContent = String(days).padStart(2, "0");
+          hoursEl.textContent = String(hours).padStart(2, "0");
+          minutesEl.textContent = String(minutes).padStart(2, "0");
+          secondsEl.textContent = String(seconds).padStart(2, "0");
+        }
+        updateCountdown();
+        const timer = setInterval(updateCountdown, 1000);
+      }
+
+      // Inicialização da página
+      window.onload = function () {
+        countdown();
+        gifts.sort(() => Math.random() - 0.5);
+        renderGifts();
+      };
+    </script>
+  </body>
+</html>
