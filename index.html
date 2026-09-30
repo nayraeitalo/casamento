@@ -616,6 +616,7 @@
         cursor: pointer;
 
         transition: 0.3s;
+        border: 2px solid var(--accent-color, #000);
       }
 
       .convite-card:hover {
@@ -679,6 +680,7 @@
         font-size: 15px;
 
         transition: 0.25s;
+        border: 2px solid var(--accent-color, #000);
       }
 
       .guest-btn:hover {
@@ -934,19 +936,47 @@
 
       <section id="confirmacao" class="section-block">
         <h2>Confirmação de Presença</h2>
+        <div class="separador">
+          <span></span>
+        </div>
 
-        <p style="max-width: 600px; margin: 0 auto 20px; line-height: 1.6">
-          Sua confirmação é muito importante para nós!
-        </p>
+        <div class="rsvp-container">
+          <p>Sua confirmação é muito importante para nós!</p>
 
-        <div class="nav-buttons">
-          <a
-            href="https://wa.link/gc6fdy"
-            target="_blank"
-            class="btn-nav btn-wpp"
-          >
-            Whatsapp
-          </a>
+          <input
+            id="nomePesquisa"
+            class="rsvp-input"
+            type="text"
+            placeholder="Digite seu nome"
+          />
+
+          <button class="rsvp-btn" onclick="pesquisar()">Pesquisar</button>
+
+          <div id="loading" class="status-msg hidden">⏳ Carregando...</div>
+
+          <div id="resultadoPesquisa" class="rsvp-results"></div>
+
+          <div id="convite" class="hidden">
+            <h3 id="principalNome"></h3>
+
+            <div id="areaConfirmacao">
+              <div id="listaConvidados"></div>
+
+              <button
+                id="botaoConfirmar"
+                class="rsvp-btn"
+                onclick="confirmar()"
+              >
+                Confirmar presença
+              </button>
+
+              <div id="loading_confirm" class="status-confirm hidden">
+                ⏳ Respondendo confirmação...
+              </div>
+            </div>
+          </div>
+
+          <div id="mensagem" class="status-msg"></div>
         </div>
       </section>
 
@@ -1066,6 +1096,13 @@
       const MINHA_CHAVE_PIX = "+5585982172141";
       const NOME_BENEFICIARIO = "ANTONIO ITALO PINHEIRO GOMES";
       const CIDADE_BENEFICIARIO = "Baturite";
+      const API = "https://backend-casamentos.onrender.com";
+      const sheet = "12DkN1v_Cc9vDAPP9qtWGEONKe0GHBKhIhCzxLKFAJKg";
+      let respostas = {};
+      let principalAtual = "";
+      let presenteAtual = null;
+      let pessoas = [];
+      let dados_noivos = [];
 
       // Banco de dados dos presentes
       let gifts = [
@@ -1473,6 +1510,274 @@
           return (r & 0xffff).toString(16).toUpperCase().padStart(4, "0");
         };
         return p + crc(p);
+      }
+      function mostrarLoading() {
+        document.getElementById("loading").classList.remove("hidden");
+      }
+
+      function esconderLoading() {
+        document.getElementById("loading").classList.add("hidden");
+      }
+
+      function mostrarLoadingConfirm() {
+        document.getElementById("loading_confirm").classList.remove("hidden");
+      }
+
+      function esconderLoadingConfirm() {
+        document.getElementById("loading_confirm").classList.add("hidden");
+      }
+
+      async function pesquisar() {
+        const nome = document.getElementById("nomePesquisa").value.trim();
+
+        if (!nome) {
+          return;
+        }
+
+        // Limpa convite anterior
+        const conviteDiv = document.getElementById("convite");
+        conviteDiv.classList.add("hidden");
+
+        document.getElementById("listaConvidados").innerHTML = "";
+        document.getElementById("mensagem").innerHTML = "";
+
+        let pessoas = [];
+        let respostas = {};
+        let principalAtual = "";
+
+        mostrarLoading();
+
+        let dados;
+
+        try {
+          const response = await fetch(
+            `${API}/pesquisar?nome=${encodeURIComponent(nome)}&sheet=${sheet}`,
+          );
+          dados = await response.json();
+        } catch (erro) {
+          document.getElementById("mensagem").innerHTML =
+            "❌ Erro ao buscar convite.";
+          console.error(erro);
+          return;
+        } finally {
+          esconderLoading();
+        }
+
+        const resultado = document.getElementById("resultadoPesquisa");
+
+        resultado.innerHTML = "";
+
+        if (dados.length === 0) {
+          resultado.innerHTML = `
+                <div class="status-msg">
+                    Nenhum convite encontrado.
+                </div>
+            `;
+
+          return;
+        }
+
+        dados.forEach((item) => {
+          resultado.innerHTML += `
+
+                <div
+                    class="convite-card"
+                    onclick="abrirConvite('${item.principal.replace(/'/g, "\\'")}')">
+
+                    <div class="convite-info">
+
+                        <div class="convite-nome">
+                            ${item.principal}
+                        </div>
+
+                        <div class="convite-desc">
+                            CONFIRMAR PRESENÇA
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+        });
+      }
+
+      async function abrirConvite(principal) {
+        document.getElementById("areaConfirmacao").classList.remove("hidden");
+        document.getElementById("resultadoPesquisa").innerHTML = "";
+        respostas = {};
+        mostrarLoading();
+
+        let convite;
+        try {
+          const response = await fetch(
+            `${API}/convite_sem_numero?principal=${encodeURIComponent(principal)}&sheet=${sheet}`,
+          );
+          convite = await response.json();
+        } catch (erro) {
+          document.getElementById("mensagem").innerHTML =
+            "❌ Erro ao abrir convite.";
+          console.error(erro);
+          return;
+        } finally {
+          esconderLoading();
+        }
+
+        principalAtual = principal;
+        pessoas = convite.pessoas;
+        document.getElementById("convite").classList.remove("hidden");
+        const lista = document.getElementById("listaConvidados");
+
+        lista.innerHTML = "";
+
+        convite.pessoas.forEach((pessoa, index) => {
+          let status = "";
+
+          let simClass = "";
+          let naoClass = "";
+
+          let simDisabled = "";
+          let naoDisabled = "";
+
+          const confirmacao = pessoa.confirmacao;
+
+          if (confirmacao === "Sim") {
+            simClass = "selected-green";
+            naoDisabled = "disabled";
+          } else if (confirmacao === "Não") {
+            naoClass = "selected-red";
+            simDisabled = "disabled";
+          }
+
+          lista.innerHTML += `
+        
+                <div class="guest-card">
+                
+                    <div class="guest-name">
+                    
+                        ${pessoa.convidado}
+                    
+                        <div class="guest-status">
+                            ${status}
+                        </div>
+                    
+                    </div>
+                
+                    <div class="guest-buttons">
+                    
+                        <button
+                            id="sim_${index}"
+                            class="guest-btn ${simClass}"
+                            ${simDisabled}
+                            onclick="selecionar(${index}, true)">
+                    
+                            ✓ Vou
+                    
+                        </button>
+                    
+                        <button
+                            id="nao_${index}"
+                            class="guest-btn ${naoClass}"
+                            ${naoDisabled}
+                            onclick="selecionar(${index}, false)">
+                    
+                            ✕ Não vou
+                    
+                        </button>
+                    
+                    </div>
+                
+                </div>
+            
+            `;
+        });
+
+        if (convite.confirmado) {
+          document.getElementById("mensagem").innerHTML =
+            "✅ Este convite já foi respondido.";
+
+          document.getElementById("areaConfirmacao").classList.add("hidden");
+        }
+      }
+
+      async function confirmar() {
+        document.getElementById("mensagem").innerHTML = "";
+
+        const confirmacoes = [];
+
+        for (let i = 0; i < pessoas.length; i++) {
+          const pessoa = pessoas[i];
+
+          if (respostas[i] === undefined) {
+            document.getElementById("mensagem").innerHTML =
+              "⚠️ Selecione se cada convidado vai ou não vai.";
+
+            return;
+          }
+
+          confirmacoes.push({
+            convidado: pessoa.convidado,
+            confirmacao: respostas[i],
+          });
+        }
+
+        const body = {
+          principal: principalAtual,
+          pessoas: confirmacoes,
+          sheet: sheet,
+        };
+
+        mostrarLoadingConfirm();
+
+        let resposta;
+        try {
+          const response = await fetch(`${API}/confirmar_sem_telefone`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+          });
+
+          resposta = await response.json();
+        } catch (erro) {
+          document.getElementById("mensagem").innerHTML =
+            "❌ Erro ao responder confirmação.";
+          console.error(erro);
+          return;
+        } finally {
+          esconderLoadingConfirm();
+        }
+        console.log(resposta);
+        if (resposta.sucesso) {
+          document.getElementById("mensagem").innerHTML =
+            "✅ Confirmação respondida com sucesso.";
+
+          document.getElementById("areaConfirmacao").classList.add("hidden");
+        } else {
+          document.getElementById("mensagem").innerHTML =
+            "❌ " + resposta.detail;
+        }
+      }
+
+      function selecionar(index, valor) {
+        respostas[index] = valor;
+
+        document
+          .getElementById(`sim_${index}`)
+          .classList.remove("selected-green");
+
+        document
+          .getElementById(`nao_${index}`)
+          .classList.remove("selected-red");
+
+        if (valor) {
+          document
+            .getElementById(`sim_${index}`)
+            .classList.add("selected-green");
+        } else {
+          document.getElementById(`nao_${index}`).classList.add("selected-red");
+        }
       }
 
       // CONTRA-REGRESSIVA INTELIGENTE
